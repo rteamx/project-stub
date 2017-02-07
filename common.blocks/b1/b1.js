@@ -1,11 +1,13 @@
-modules.define('b1', ['i-bem-dom', 'radio-group'], function(provide, bemDom, Radio) {
+modules.define('b1', ['i-bem-dom', 'radio-group'], function(provide, bemDom, RadioGroup) {
 
 provide(bemDom.declBlock(this.name, {
     onSetMod: {
         js: {
             inited: function() {
-                this._radioGroup = this.findChildElem('options', 'radio-group');
+                this._radioGroup = this.findChildElem('options').findMixedBlock(RadioGroup);
                 this._elemContent = this.findChildElem('elem');
+                
+                console.log(this._radioGroup);
                 
                 this._events(this._radioGroup).on('change', this._radioChange);
                 this._events(this._radioGroup).on('click', this._radioClick);
