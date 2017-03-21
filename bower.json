@@ -1,0 +1,17 @@
+{
+  "name": "bem-project-stub",
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "homepage": "https://github.com/rteamx/project-stub",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bem-calendar": "bem/bem-calendar"
+  }
+}
