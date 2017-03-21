@@ -17,7 +17,7 @@ module.exports = {
           content: [{
               block: 'input',
               mods: {
-                  theme: 'islands',
+                  theme: 'ocean',
                   size: 'm',
                   'has-calendar': true
               },

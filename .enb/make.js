@@ -43,7 +43,8 @@ var techs = {
         'libs/bem-calendar/desktop.blocks',
         'libs/bem-calendar/touch.blocks',
         'common.blocks',
-        'desktop.blocks'
+        'desktop.blocks',
+        'design/common.blocks'
     ];
 
 module.exports = function(config) {
