@@ -1,4 +1,6 @@
-var techs = {
+var fs = require('fs'),
+    path = require('path'),
+    techs = {
         // essential
         fileProvider: require('enb/techs/file-provider'),
         fileMerge: require('enb/techs/file-merge'),
@@ -30,9 +32,10 @@ var techs = {
         // bemhtml
         bemhtml: require('enb-bemxjst/techs/bemhtml'),
         bemjsonToHtml: require('enb-bemxjst/techs/bemjson-to-html'),
-        beautify: require('enb-beautify/techs/enb-beautify-html')
+        beautifyHhtml: require('enb-beautify/techs/enb-beautify-html')
     },
     enbBemTechs = require('enb-bem-techs'),
+    merged = require('./techs/merged'),
     levels = [
         { path: 'node_modules/bem-core/common.blocks', check: false },
         { path: 'node_modules/bem-core/desktop.blocks', check: false },
@@ -45,14 +48,25 @@ var techs = {
     ];
 
 module.exports = function(config) {
-    var isProd = process.env.YENV === 'production';
+    var isProd = process.env.YENV === 'production',
+        mergedBundleName = 'merged',
+        pathToMargedBundle = path.join('desktop.bundles', mergedBundleName);
+        
+    fs.existsSync(pathToMargedBundle) || fs.mkdirSync(pathToMargedBundle);
+    
+    merged(config, pathToMargedBundle);
 
     config.nodes('*.bundles/*', function(nodeConfig) {
+        var isMergedNode = path.basename(nodeConfig.getPath()) === mergedBundleName;
+        
+        isMergedNode || nodeConfig.addTechs([
+            [techs.fileProvider, { target: '?.bemjson.js' }],
+            [enbBemTechs.bemjsonToBemdecl]
+        ]);
+        
         nodeConfig.addTechs([
             // essential
             [enbBemTechs.levels, { levels: levels }],
-            [techs.fileProvider, { target: '?.bemjson.js' }],
-            [enbBemTechs.bemjsonToBemdecl],
             [enbBemTechs.deps],
             [enbBemTechs.files],
 
@@ -78,7 +92,7 @@ module.exports = function(config) {
               target: '?.min.html'
             }],
             
-            [techs.beautify, {
+            [techs.beautifyHhtml, {
               htmlFile: '?.min.html',
               target: '?.html'
             }],
@@ -117,6 +131,7 @@ module.exports = function(config) {
             [techs.borschik, { source: '?.css', target: '?.min.css', minify: isProd }]
         ]);
 
-        nodeConfig.addTargets([/* '?.bemtree.js', */ '?.html', '?.min.css', '?.min.js']);
+        nodeConfig.addTargets([/* '?.bemtree.js', */ '?.min.css', '?.min.js']);
+        isMergedNode || nodeConfig.addTargets(['?.html']);
     });
 };
