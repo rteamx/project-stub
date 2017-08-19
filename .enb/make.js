@@ -1,6 +1,6 @@
-var fs = require('fs'),
-    path = require('path'),
-    techs = {
+const fs    = require('fs'),
+      path  = require('path'),
+      techs = {
         // essential
         fileProvider: require('enb/techs/file-provider'),
         fileMerge: require('enb/techs/file-merge'),
@@ -18,7 +18,7 @@ var fs = require('fs'),
             require('postcss-calc')(),
             require('postcss-nested'),
             require('rebem-css'),
-            require('postcss-url')({ url: 'inline' }),
+            require('postcss-url')({ url: 'rebase' }),
             require('autoprefixer')(),
             require('postcss-reporter')()
         ],
@@ -48,9 +48,9 @@ var fs = require('fs'),
     ];
 
 module.exports = function(config) {
-    var isProd = process.env.YENV === 'production',
-        mergedBundleName = 'merged',
-        pathToMargedBundle = path.join('desktop.bundles', mergedBundleName);
+    const isProd             = process.env.YENV === 'production',
+          mergedBundleName   = 'merged',
+          pathToMargedBundle = path.join('desktop.bundles', mergedBundleName);
         
     fs.existsSync(pathToMargedBundle) || fs.mkdirSync(pathToMargedBundle);
     
