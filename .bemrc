@@ -13,6 +13,7 @@ module.exports = {
                 create: {
                     templates: {
                         'bemjson.js': '.bem/templates/bemjson.js',
+                        'post.css'  : '.bem/templates/post.css.js',
                     },
                     techs: ['css', 'js'],
                     levels: {
