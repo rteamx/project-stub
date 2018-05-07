@@ -20,7 +20,7 @@ const fs    = require('fs'),
             require('postcss-calc')(),
             require('postcss-nested'),
             require('rebem-css'),
-            require('postcss-url')({ url: 'rebase' }),
+            require('postcss-url')({ url: 'Inline' }),
             require('autoprefixer')(),
             require('postcss-reporter')(),
             require('postcss-color-function')()
