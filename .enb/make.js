@@ -50,26 +50,30 @@ const fs    = require('fs'),
         { path: 'node_modules/bem-history/common.blocks', check: false },
         { path: 'node_modules/bem-forms/common.blocks', check: false },
         'common.blocks',
-        'desktop.blocks'
+        'desktop.blocks',
+        'touch.blocks',
+        'design/common.blocks',
+        'design/desktop.blocks',
+        'design/touch.blocks'
     ];
 
 module.exports = function(config) {
     const isProd             = process.env.YENV === 'production',
           mergedBundleName   = 'merged',
           pathToMargedBundle = path.join('desktop.bundles', mergedBundleName);
-        
+
     fs.existsSync(pathToMargedBundle) || fs.mkdirSync(pathToMargedBundle);
-    
+
     merged(config, pathToMargedBundle);
 
     config.nodes('*.bundles/*', function(nodeConfig) {
         var isMergedNode = path.basename(nodeConfig.getPath()) === mergedBundleName;
-        
+
         isMergedNode || nodeConfig.addTechs([
             [techs.fileProvider, { target: '?.bemjson.js' }],
             [enbBemTechs.bemjsonToBemdecl]
         ]);
-        
+
         nodeConfig.addTechs([
             // essential
             [enbBemTechs.levels, { levels: levels }],
@@ -97,7 +101,7 @@ module.exports = function(config) {
             [techs.bemjsonToHtml, {
               target: '?.min.html'
             }],
-            
+
             [techs.beautifyHhtml, {
               htmlFile: '?.min.html',
               target: '?.html'
