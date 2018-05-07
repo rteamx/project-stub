@@ -14,13 +14,16 @@ const fs    = require('fs'),
             require('postcss-import')(),
             require('postcss-each'),
             require('postcss-for'),
+            require('postcss-mixins'),
+            require('postcss-custom-media'),
             require('postcss-simple-vars')(),
             require('postcss-calc')(),
             require('postcss-nested'),
             require('rebem-css'),
             require('postcss-url')({ url: 'rebase' }),
             require('autoprefixer')(),
-            require('postcss-reporter')()
+            require('postcss-reporter')(),
+            require('postcss-color-function')()
         ],
 
         // js
