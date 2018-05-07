@@ -62,5 +62,8 @@
     "build": "enb make",
     "dist": "enb make clean && cross-env YENV=production npm run build"
   },
-  "private": true
+  "private": true,
+  "dependencies": {
+    "bem-font-awesome-icons": "^1.1.1"
+  }
 }
